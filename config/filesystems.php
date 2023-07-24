@@ -28,6 +28,8 @@ return [
     |
     */
 
+    'cloud' => env('FILESYSTEM_CLOUD', 's3'),
+
     'disks' => [
 
         'local' => [

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\NewspaperController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,4 +17,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::group([
+    'prefix' => 'newspaper'
+], function ($router) {
+    Route::get('/{id}', [NewspaperController::class, 'getNewspaper']);
+    Route::post('/', [NewspaperController::class, 'createNewspaper']);
 });
