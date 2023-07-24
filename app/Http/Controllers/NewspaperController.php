@@ -43,6 +43,7 @@ class NewspaperController extends Controller
         $image = $request->file('image');
         $index = $this->newspaperModel->createNewspaper($newspaper);
 
+//        dd($image);
         $path_image = "images/" . $index . "/original/" . $image->getBasename();
         $path = Storage::disk('s3')->put($path_image, $image);
 
@@ -52,7 +53,7 @@ class NewspaperController extends Controller
         $image_DB['newspaper_id'] = $index;
         $this->imageModel->createImage($image_DB);
 
-        $newspaper['image_key'] = $path;
+        $newspaper['image_key'] = env("AWS_CLOUDFRONT").$path;
         $newspaper['id'] = $index;
 
         $this->redis->set('newspaper:' . $index, json_encode([
